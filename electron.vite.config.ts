@@ -1,34 +1,50 @@
-import { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { resolve } from 'path';
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    build: {
+      lib: {
+        entry: 'src/core/main/index.ts',
+      },
+    },
   },
   preload: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    build: {
+      lib: {
+        entry: 'src/core/preload/index.ts',
+      },
+    },
   },
   renderer: {
+    root: 'src/core/renderer',
+    build: {
+      rollupOptions: {
+        input: 'src/core/renderer/index.html',
+      },
+    },
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src'),
-        '@preload': resolve('src/preload'),
-        '@main': resolve('src/main')
-      }
+        '@renderer': resolve('src/core/renderer/src'),
+        '@preload': resolve('src/core/preload'),
+        '@main': resolve('src/core/main'),
+      },
     },
     plugins: [
       tanstackRouter({
         target: 'react',
         autoCodeSplitting: true,
-        routesDirectory: './src/renderer/src/routes',
-        generatedRouteTree: './src/renderer/src/routeTree.gen.ts'
+        routesDirectory: './src/core/renderer/src/routes',
+        generatedRouteTree: './src/core/renderer/src/routeTree.gen.ts',
       }),
       tailwindcss(),
-      react()
-    ]
-  }
-})
+      react(),
+    ],
+  },
+});

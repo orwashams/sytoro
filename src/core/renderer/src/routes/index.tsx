@@ -1,11 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 // import {} from '@renderer/components/versions'
-import { AppSidebar } from '@renderer/components/ui/app-sidebar'
-import { SidebarProvider, SidebarTrigger } from '@renderer/components/ui/sidebar'
+import { AppSidebar } from '@renderer/components/ui/app-sidebar';
+import { SidebarProvider, SidebarTrigger } from '@renderer/components/ui/sidebar';
 
 export const Route = createFileRoute('/')({
-  component: Index
-})
+  component: Index,
+});
 
 function Index() {
   // const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
@@ -21,5 +21,5 @@ function Index() {
         <SidebarTrigger />
       </main>
     </SidebarProvider>
-  )
+  );
 }
