@@ -11,6 +11,13 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@core": [
+        "src/core"
+      ],
+      "@features/*": [
+        "src/features/*"
+      ],
+
       "@renderer/*": [
         "src/core/renderer/src/*"
       ],
@@ -20,6 +27,8 @@
       "@main/*": [
         "src/core/main/*"
       ],
+      
+
 
 
     }

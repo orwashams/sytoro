@@ -5,6 +5,14 @@ import tailwindcss from '@tailwindcss/vite';
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
+const paths = {
+  '@core': resolve('src/core'),
+  '@features': resolve('src/features'),
+  '@renderer': resolve('src/core/renderer/src'),
+  '@preload': resolve('src/core/preload'),
+  '@main': resolve('src/core/main'),
+};
+
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
@@ -13,7 +21,11 @@ export default defineConfig({
         entry: 'src/core/main/index.ts',
       },
     },
+    resolve: {
+      alias: paths,
+    },
   },
+
   preload: {
     plugins: [externalizeDepsPlugin()],
     build: {
@@ -21,7 +33,11 @@ export default defineConfig({
         entry: 'src/core/preload/index.ts',
       },
     },
+    resolve: {
+      alias: paths,
+    },
   },
+
   renderer: {
     root: 'src/core/renderer',
     build: {
@@ -30,11 +46,7 @@ export default defineConfig({
       },
     },
     resolve: {
-      alias: {
-        '@renderer': resolve('src/core/renderer/src'),
-        '@preload': resolve('src/core/preload'),
-        '@main': resolve('src/core/main'),
-      },
+      alias: paths,
     },
     plugins: [
       tanstackRouter({
